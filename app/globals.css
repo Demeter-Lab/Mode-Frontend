@@ -6,7 +6,48 @@ body {
   background: #0f0c29;  
   background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  
   background: linear-gradient(to right, #24243e, #302b63, #0f0c29); 
-  /* Use the Inter font if available, otherwise use a system font */
-font-family: 'Inter', sans-serif;
-
+  font-family: 'Inter', sans-serif;
 }
+
+.gradient-button {
+  background-image: linear-gradient(30deg, transparent, #9498a1);
+  background-size: 200% 100%;
+  transition: background-position 0.5s ease-out;
+}
+
+.gradient-button:hover {
+  background-position: -100% 0;
+}
+
+.blue-button {
+  background-color: #add8e6; 
+  border: 1px solid #4682b4;
+  color: rgb(18, 17, 17); 
+  padding: 8px 16px; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  transition: background-color 0.3s ease; 
+}
+
+.blue-button:hover {
+  background-color: #5d89a1; 
+  color: rgb(23, 22, 22);
+}
+
+
+.rotate-animation {
+  animation: rotate 10s linear infinite; 
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+

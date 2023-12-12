@@ -34,8 +34,6 @@ const onboard = Onboard({
   ],
 });
 
-
-
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [connectedWallet, setConnectedWallet] = useState(null);
@@ -54,7 +52,7 @@ export function Navbar() {
     const walletAddress = await connectWallet();
     setConnectedWallet(walletAddress);
 
-    localStorage.setItem("connectedWallet", walletAddress);
+    localStorage.setItem("connectedWallet", walletAddress.toString());
   };
 
   // Async function to connect the wallet
@@ -79,15 +77,17 @@ export function Navbar() {
       return truncatedAddress;
     }
 
-    return null;
+    return "";
   };
 
   useEffect(() => {
     const storedWallet = localStorage.getItem("connectedWallet");
+    console.log("Stored wallet from localStorage:", storedWallet);
+
     if (storedWallet) {
-        setConnectedWallet(storedWallet);
+      setConnectedWallet(storedWallet);
     }
-}, []);
+  }, []);
 
   return (
     <nav className="border-b border-gray-500">
@@ -133,11 +133,11 @@ export function Navbar() {
           <li>
             <a
               onClick={handleConnectWallet}
-              className={`text-gray-200 text-sm border border-gray-600 px-4 py-2 ml-4 mr-4 rounded-lg cursor-pointer bg-${
-                connectedWallet ? "[#006400]" : ""
-              }`}
+              className={`text-gray-200 text-sm border border-gray-600 px-4 py-2 ml-4 mr-4 rounded-lg cursor-pointer`}
             >
-              {connectedWallet ? connectedWallet : "Connect Wallet"}
+              {connectedWallet !== null
+                ? connectedWallet || "Connect Wallet"
+                : "Connect Wallet"}
             </a>
           </li>
         </ul>
@@ -157,11 +157,11 @@ export function Navbar() {
               <li>
                 <a
                   onClick={handleConnectWallet}
-                  className={`text-gray-200 text-sm border border-gray-600 px-4 py-2 ml-4 mr-4 rounded-lg cursor-pointer bg-${
-                    connectedWallet ? "[#006400]" : ""
-                  }`}
+                  className={`text-gray-200 text-sm border border-gray-600 px-4 py-2 ml-4 mr-4 rounded-lg cursor-pointer`}
                 >
-                  {connectedWallet ? connectedWallet : "Connect Wallet"}
+                  {connectedWallet !== null
+                    ? connectedWallet || "Connect Wallet"
+                    : "Connect Wallet"}
                 </a>
               </li>
             </ul>
