@@ -1,6 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Onboard from "@web3-onboard/core";
+import injectedModule from "@web3-onboard/injected-wallets";
+import { ethers } from "ethers";
 
 const menuItems = [
   { text: "Features", href: "/features" },
@@ -8,24 +11,90 @@ const menuItems = [
   { text: "FAQ", href: "/faq" },
 ];
 
+const MAINNET_RPC_URL =
+  "https://mainnet.infura.io/v3/a1cf6dbc78dc40d994ede1ead542d6d5";
+
+const injected = injectedModule();
+
+const onboard = Onboard({
+  wallets: [injected],
+  chains: [
+    {
+      id: "0x1",
+      token: "ETH",
+      label: "Ethereum Mainnet",
+      rpcUrl: MAINNET_RPC_URL,
+    },
+    {
+      id: 42161,
+      token: "ARB-ETH",
+      label: "Arbitrum One",
+      rpcUrl: "https://rpc.ankr.com/arbitrum",
+    },
+  ],
+});
+
+
+
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [connectedWallet, setConnectedWallet] = useState(null);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const desktopLinkStyles =
-    "text-gray-200 text-sm font-sans hover:bg-gray-600 hover:bg-opacity-30 px-4 py-2 rounded-lg";
+    "text-gray-200 text-sm hover:bg-gray-600 hover:bg-opacity-30 px-4 py-2 rounded-lg";
   const mobileLinkStyles =
-    "text-gray-200 text-sm font-sans hover:bg-gray-600 hover:bg-opacity-30 block px-4 py-2 ml-4";
+    "text-gray-200 text-sm hover:bg-gray-600 hover:bg-opacity-30 block px-4 py-2 ml-4";
+
+  // Function to handle wallet connection
+  const handleConnectWallet = async () => {
+    const walletAddress = await connectWallet();
+    setConnectedWallet(walletAddress);
+
+    localStorage.setItem("connectedWallet", walletAddress);
+  };
+
+  // Async function to connect the wallet
+  const connectWallet = async () => {
+    const wallets = await onboard.connectWallet();
+    console.log(wallets);
+
+    if (wallets[0]) {
+      const ethersProvider = new ethers.BrowserProvider(
+        wallets[0].provider,
+        "any"
+      );
+      const signer = ethersProvider.getSigner();
+      const promiseAddress = (await signer).getAddress();
+      const address = await promiseAddress;
+
+      // Truncate the wallet address
+      const truncatedAddress = `${address.substring(0, 3)}...${address.slice(
+        -2
+      )}`;
+
+      return truncatedAddress;
+    }
+
+    return null;
+  };
+
+  useEffect(() => {
+    const storedWallet = localStorage.getItem("connectedWallet");
+    if (storedWallet) {
+        setConnectedWallet(storedWallet);
+    }
+}, []);
 
   return (
     <nav className="border-b border-gray-500">
       <div className="container mx-auto py-4 flex justify-between items-center px-6">
         <Link
           href="/"
-          className="text-gray-200 text-lg font-bold font-sans flex items-center"
+          className="text-gray-200 text-lg font-bold flex items-center"
         >
           <span className="mr-2">🛰️</span>
           <span className="tracking-wide">ModePad</span>
@@ -62,12 +131,14 @@ export function Navbar() {
             </li>
           ))}
           <li>
-            <Link
-              className="text-gray-200 text-sm border border-gray-600 font-sans px-4 py-2 ml-4 mr-4 rounded-lg"
-              href="/register"
+            <a
+              onClick={handleConnectWallet}
+              className={`text-gray-200 text-sm border border-gray-600 px-4 py-2 ml-4 mr-4 rounded-lg cursor-pointer bg-${
+                connectedWallet ? "[#006400]" : ""
+              }`}
             >
-              Connect Wallet
-            </Link>
+              {connectedWallet ? connectedWallet : "Connect Wallet"}
+            </a>
           </li>
         </ul>
       </div>
@@ -84,12 +155,14 @@ export function Navbar() {
                 </li>
               ))}
               <li>
-                <Link
-                  className="border border-gray-600 font-sans text-gray-200 px-4 py-2 ml-4 mr-4 rounded-lg w-full text-center"
-                  href="/register"
+                <a
+                  onClick={handleConnectWallet}
+                  className={`text-gray-200 text-sm border border-gray-600 px-4 py-2 ml-4 mr-4 rounded-lg cursor-pointer bg-${
+                    connectedWallet ? "[#006400]" : ""
+                  }`}
                 >
-                  Connect Wallet
-                </Link>
+                  {connectedWallet ? connectedWallet : "Connect Wallet"}
+                </a>
               </li>
             </ul>
           </div>

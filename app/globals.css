@@ -6,4 +6,7 @@ body {
   background: #0f0c29;  
   background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  
   background: linear-gradient(to right, #24243e, #302b63, #0f0c29); 
+  /* Use the Inter font if available, otherwise use a system font */
+font-family: 'Inter', sans-serif;
+
 }
