@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-const FAQ = () => {
+export function FAQ () {
   const [openIndex, setOpenIndex] = useState(null);
 
   const faqs = [
@@ -92,5 +92,3 @@ const FAQ = () => {
     </div>
   );
 };
-
-export default FAQ;

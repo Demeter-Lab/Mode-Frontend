@@ -29,7 +29,7 @@ const featuresData = [
   },
 ];
 
-const FeaturesBox = () => {
+export function FeaturesBox() {
   return (
     <div id="features">
       <h1 className="word">
@@ -67,4 +67,4 @@ const FeaturesBox = () => {
   );
 };
 
-export default FeaturesBox;
+
