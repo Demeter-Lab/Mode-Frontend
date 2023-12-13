@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import AboutImage from "../app/assets/images/cxpad_multichain_img.svg";
 
 export function AboutUs() {
@@ -16,7 +17,9 @@ export function AboutUs() {
           capital and ensures the safety of early-stage participants.
         </p>
         <div className="flex space-x-4 mb-8">
-          <button className="blue-button">Bridge ETH(mode)</button>
+          <Link href="https://bridge.mode.network/" className="blue-button">
+            Bridge ETH(mode)
+          </Link>
 
           <button className="border border-gray-500 text-gray-300 px-4 py-2 rounded-lg relative overflow-hidden gradient-button">
             Upcoming IDOs
