@@ -31,39 +31,39 @@ const featuresData = [
 
 const FeaturesBox = () => {
   return (
-    <>
-     <h1 className="word">
-  <span>F</span>
-  <span>E</span>
-  <span>A</span>
-  <span>T</span>
-  <span>U</span>
-  <span>R</span>
-  <span>E</span>
-  <span>S</span>
-</h1>
+    <div id="features">
+      <h1 className="word">
+        <span>F</span>
+        <span>E</span>
+        <span>A</span>
+        <span>T</span>
+        <span>U</span>
+        <span>R</span>
+        <span>E</span>
+        <span>S</span>
+      </h1>
 
-    <div className="container mx-auto py-8">
-      <div className="px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {featuresData.map((feature) => (
-          <div
-            key={feature.id}
-            className="bg-[#0f0c29] p-6 rounded-lg shadow-md flex flex-col items-center py-24 space-y-4 grid-item"
-          >
-            <Image
-              src={feature.image}
-              alt={feature.header}
-              className="mb-2 w-12 h-12"
-            />
-            <h2 className="text-2xl text-gray-200 font-bold mb-2">
-              {feature.header}
-            </h2>
-            <p className="text-gray-500 text-center">{feature.paragraph}</p>
-          </div>
-        ))}
+      <div className="container mx-auto py-8">
+        <div className="px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {featuresData.map((feature) => (
+            <div
+              key={feature.id}
+              className="bg-[#0f0c29] p-6 rounded-lg shadow-md flex flex-col items-center py-24 space-y-4 grid-item"
+            >
+              <Image
+                src={feature.image}
+                alt={feature.header}
+                className="mb-2 w-12 h-12"
+              />
+              <h2 className="text-2xl text-gray-200 font-bold mb-2">
+                {feature.header}
+              </h2>
+              <p className="text-gray-500 text-center">{feature.paragraph}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
-    </>
   );
 };
 

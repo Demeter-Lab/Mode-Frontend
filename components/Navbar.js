@@ -1,14 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Onboard from "@web3-onboard/core";
 import injectedModule from "@web3-onboard/injected-wallets";
 import { ethers } from "ethers";
 
 const menuItems = [
-  { text: "Features", href: "/features" },
-  { text: "About Us", href: "/about-us" },
-  { text: "FAQ", href: "/faq" },
+  { text: "About Us", href: "/about-us", sectionId: "about-us" },
+  { text: "Features", href: "/features", sectionId: "features" },
+  { text: "FAQ", href: "/faq", sectionId: "faq" },
 ];
 
 const MAINNET_RPC_URL =
@@ -37,6 +38,17 @@ const onboard = Onboard({
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [connectedWallet, setConnectedWallet] = useState(null);
+
+  const router = useRouter();
+
+  const handleMenuItemClick = (sectionId) => {
+    // Scroll to the section
+    const sectionElement = document.getElementById(sectionId);
+    if (sectionElement) {
+      sectionElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -125,10 +137,13 @@ export function Navbar() {
         <ul className="hidden lg:flex space-x-2">
           {menuItems.map((item, index) => (
             <li key={index}>
-              <Link className={desktopLinkStyles} href={item.href}>
-                {item.text}
-              </Link>
-            </li>
+            <a
+              className={mobileLinkStyles}
+              onClick={() => handleMenuItemClick(item.sectionId)}
+            >
+              {item.text}
+            </a>
+          </li>
           ))}
           <li>
             <a
@@ -149,10 +164,13 @@ export function Navbar() {
             <ul className="space-y-4">
               {menuItems.map((item, index) => (
                 <li key={index}>
-                  <Link className={mobileLinkStyles} href={item.href}>
-                    {item.text}
-                  </Link>
-                </li>
+                <a
+                  className={mobileLinkStyles}
+                  onClick={() => handleMenuItemClick(item.sectionId)}
+                >
+                  {item.text}
+                </a>
+              </li>
               ))}
               <li>
                 <a
