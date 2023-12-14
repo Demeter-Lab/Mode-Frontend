@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import ftr_ic01 from "/app/assets/icons/ftr_ic01.png";
 import ftr_ic02 from "../app/assets/icons/ftr_ic08.png";
