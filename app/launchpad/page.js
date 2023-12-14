@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Navbar } from "@/components/Navbar";
 import animalialogo from "../assets/images/animalialogo.jpg";
@@ -8,6 +8,7 @@ import ivendpay from "../assets/images/ivendpay.jpg";
 import TgIcon from "../assets/icons/tg.svg";
 import Twitter_X from "../assets/icons/twitter_x.svg";
 import "../../styles/Launchpad.css";
+import { SearchPools } from "@/components/SearchPools";
 
 const projectsData = [
   {
@@ -55,6 +56,13 @@ const projectsData = [
 ];
 
 export default function Page() {
+
+  const [filteredProjects, setFilteredProjects] = useState(projectsData);
+
+  const handleSearch = (filteredProjects) => {
+    setFilteredProjects(filteredProjects);
+  }
+
   const truncateText = (text, maxLength) => {
     if (text.length <= maxLength) {
       return text;
@@ -67,8 +75,9 @@ export default function Page() {
     <>
       <Navbar />
       <div className="container mx-auto py-8">
-        <div className="px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projectsData.map((project) => (
+        <SearchPools projects={projectsData} onSearch={handleSearch} />
+        <div className="px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-12">
+          {filteredProjects.map((project) => (
             <div
               key={project.id}
               className="relative bg-[#0f0c29] border border-[#blue] p-6 rounded-lg shadow-md flex flex-col py-24 space-y-4"
