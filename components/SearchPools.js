@@ -21,7 +21,7 @@ export function SearchPools({ projects, onSearch, onSort }) {
       (project) => project.status === status
     );
     onSort(sortedProjects);
-    setSelectedStatus(status); 
+    setSelectedStatus(status);
   };
 
   return (
@@ -45,30 +45,19 @@ export function SearchPools({ projects, onSearch, onSort }) {
       </div>
 
       <div className="flex justify-center space-x-4">
-        <button
-          className={`border border-gray-600 text-gray-400 px-4 py-2 rounded-lg ${
-            selectedStatus === "upcoming" ? "bg-yellow-600 text-white" : ""
-          }`}
-          onClick={() => handleSort("upcoming")}
-        >
-          Upcoming
-        </button>
-        <button
-          className={`border border-gray-600 text-gray-400 px-4 py-2 rounded-lg ${
-            selectedStatus === "ended" ? "bg-red-600 text-white" : ""
-          }`}
-          onClick={() => handleSort("ended")}
-        >
-          Ended
-        </button>
-        <button
-          className={`border border-gray-600 text-gray-400 px-4 py-2 rounded-lg ${
-            selectedStatus === "live" ? "bg-green-600 text-white" : ""
-          }`}
-          onClick={() => handleSort("live")}
-        >
-          Ongoing
-        </button>
+        {["upcoming", "ended", "live"].map((status) => (
+          <button
+            key={status}
+            className={`border border-gray-600 text-gray-400 px-4 py-2 rounded-lg ${
+              selectedStatus === status ? "bg-[#0f0c29] border border-gray-800 text-white" : ""
+            }`}
+            onClick={() => handleSort(status)}
+          >
+            {status === "upcoming" && "Upcoming"}
+            {status === "ended" && "Ended"}
+            {status === "live" && "Ongoing"}
+          </button>
+        ))}
       </div>
     </>
   );

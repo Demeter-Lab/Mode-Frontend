@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Navbar } from "@/components/Navbar";
 import animalialogo from "../assets/images/animalialogo.jpg";
@@ -214,15 +214,19 @@ export default function Page() {
                   </p>
                 </div>
               </div>
-              <div className="mt-6 bg-gray-300 h-8 w-full rounded-full relative">
+              <div className="mt-6 bg-gray-300 h-8 w-full rounded-lg relative">
                 <div
-                  className="bg-green-500 h-full rounded-full"
+                  className="bg-green-500 h-full rounded-lg"
                   style={{ width: project.width }}
                 ></div>
                 <span className="absolute inset-0 flex items-center justify-center text-gray-800 font-bold">
                   {project.width}
                 </span>
               </div>
+              <span className="block text-right text-gray-400 font-light text-sm">
+  {`${(parseFloat(project.hardCap.replace(/[^\d.]/g, "")) / parseFloat(project.tokenPrice.replace(/[^\d.]/g, ""))).toLocaleString()} ${project.name.slice(0, 3).toUpperCase()}`}
+</span>
+
             </div>
           ))}
         </div>
