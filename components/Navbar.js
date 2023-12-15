@@ -138,7 +138,7 @@ export function Navbar() {
           {menuItems.map((item, index) => (
             <li key={index}>
             <a
-              className={mobileLinkStyles}
+              className={desktopLinkStyles}
               onClick={() => handleMenuItemClick(item.sectionId)}
             >
               {item.text}

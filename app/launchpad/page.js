@@ -53,15 +53,60 @@ const projectsData = [
     content:
       "ivendPay is an international payment service that allows businesses to accept cryptocurrency payments through point-of-sale (POS) terminals, mobile apps, e-commerce platforms, API, and vending machines. Currently, the service operates in seven countries with some 400 active merchants, and the number of new sales points continues to grow weekly. ivendPay is already one of the EU's largest cryptocurrency payment providers in vending and retail systems. IVPAY is a utility token of the ivendPay ecosystem. It was created to ensure a smooth transfer of value across the whole ecosystem. The token will be integrated into the services and products as payment, reward, and discount means.",
   },
+  {
+    id: 4,
+    name: "ANIMALIA",
+    image: animalialogo,
+    status: "live",
+    twitterLink: "https://x.com",
+    telegramLink: "https://t.me/",
+    hardCap: "$100 011",
+    tokenPrice: "0.5 USDT",
+    startDate: "2023-12-01",
+    width: "30%",
+    content:
+      "Animalia is an independent free-to-play online NFT trading card game featuring crypto-inspired meme creatures and gemstones. Powered by the BNB Chain, Animalia gives you complete ownership over your in-game collectibles. Collect rare cards, create your own NFTs, build your deck, battle with other players and sell cards to other traders.",
+  },
+  {
+    id: 5,
+    name: "AXESMETAVERSE",
+    image: axesmetaverse,
+    status: "upcoming",
+    twitterLink: "https://x.com",
+    telegramLink: "https://t.me/",
+    hardCap: "$237 500",
+    tokenPrice: "0.05 USDT",
+    startDate: "TBA",
+    width: "0%",
+    content:
+      "Axes metaverse is a cascade of games that grew out of the blockchain version of Axes.io, which turned into one of our key worlds - Axes Battleground. In all games of the meta universe you can use the same NFTs and make in-game purchases for AXES Shards exactly as well as earning them for activities. Tied to the same universe, all Axes Metaverse games will share a common economy. Player resources earned in one game can be used in another. Train a hero in one game, and then send them to another? Easy! This is one world.",
+  },
+  {
+    id: 6,
+    name: "IVENDPAY",
+    image: ivendpay,
+    status: "ended",
+    twitterLink: "https://x.com",
+    telegramLink: "https://t.me/",
+    hardCap: "$142 501",
+    tokenPrice: "0.9 USDT",
+    startDate: "2023-06-15",
+    width: "100%",
+    content:
+      "ivendPay is an international payment service that allows businesses to accept cryptocurrency payments through point-of-sale (POS) terminals, mobile apps, e-commerce platforms, API, and vending machines. Currently, the service operates in seven countries with some 400 active merchants, and the number of new sales points continues to grow weekly. ivendPay is already one of the EU's largest cryptocurrency payment providers in vending and retail systems. IVPAY is a utility token of the ivendPay ecosystem. It was created to ensure a smooth transfer of value across the whole ecosystem. The token will be integrated into the services and products as payment, reward, and discount means.",
+  },
 ];
 
 export default function Page() {
-
   const [filteredProjects, setFilteredProjects] = useState(projectsData);
 
   const handleSearch = (filteredProjects) => {
     setFilteredProjects(filteredProjects);
-  }
+  };
+
+  const handleSort = (sortedProjects) => {
+    setFilteredProjects(sortedProjects);
+  };
 
   const truncateText = (text, maxLength) => {
     if (text.length <= maxLength) {
@@ -75,7 +120,11 @@ export default function Page() {
     <>
       <Navbar />
       <div className="container mx-auto py-8">
-        <SearchPools projects={projectsData} onSearch={handleSearch} />
+        <SearchPools
+          projects={projectsData}
+          onSearch={handleSearch}
+          onSort={handleSort}
+        />
         <div className="px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-12">
           {filteredProjects.map((project) => (
             <div
@@ -151,7 +200,8 @@ export default function Page() {
                     {project.startDate}
                   </p>
                   <p className="text-gray-400 font-bold mt-4">
-                    1 meme = <span className="text-green-500">{project.tokenPrice}</span>
+                    1 meme ={" "}
+                    <span className="text-green-500">{project.tokenPrice}</span>
                   </p>
                 </div>
               </div>
