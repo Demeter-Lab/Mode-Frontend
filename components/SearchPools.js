@@ -21,7 +21,7 @@ export function SearchPools({ projects, onSearch, onSort }) {
       (project) => project.status === status
     );
     onSort(sortedProjects);
-    setSelectedStatus(status); // Set the selected status
+    setSelectedStatus(status); 
   };
 
   return (

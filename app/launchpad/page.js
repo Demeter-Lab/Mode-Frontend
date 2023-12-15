@@ -1,10 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Navbar } from "@/components/Navbar";
 import animalialogo from "../assets/images/animalialogo.jpg";
 import axesmetaverse from "../assets/images/axesmetaverse.jpg";
 import ivendpay from "../assets/images/ivendpay.jpg";
+import lifetise from "../assets/images/lifetise.png";
+import metaclash from "../assets/images/metaclash.jpg";
+import scriptnetwork from "../assets/images/scriptnetwork.jpg";
 import TgIcon from "../assets/icons/tg.svg";
 import Twitter_X from "../assets/icons/twitter_x.svg";
 import "../../styles/Launchpad.css";
@@ -55,50 +58,56 @@ const projectsData = [
   },
   {
     id: 4,
-    name: "ANIMALIA",
-    image: animalialogo,
-    status: "live",
-    twitterLink: "https://x.com",
-    telegramLink: "https://t.me/",
-    hardCap: "$100 011",
-    tokenPrice: "0.5 USDT",
-    startDate: "2023-12-01",
-    width: "30%",
-    content:
-      "Animalia is an independent free-to-play online NFT trading card game featuring crypto-inspired meme creatures and gemstones. Powered by the BNB Chain, Animalia gives you complete ownership over your in-game collectibles. Collect rare cards, create your own NFTs, build your deck, battle with other players and sell cards to other traders.",
-  },
-  {
-    id: 5,
-    name: "AXESMETAVERSE",
-    image: axesmetaverse,
+    name: "Lifetise",
+    image: lifetise,
     status: "upcoming",
     twitterLink: "https://x.com",
     telegramLink: "https://t.me/",
-    hardCap: "$237 500",
-    tokenPrice: "0.05 USDT",
+    hardCap: "$190 001",
+    tokenPrice: "0.03 USDT",
     startDate: "TBA",
     width: "0%",
     content:
-      "Axes metaverse is a cascade of games that grew out of the blockchain version of Axes.io, which turned into one of our key worlds - Axes Battleground. In all games of the meta universe you can use the same NFTs and make in-game purchases for AXES Shards exactly as well as earning them for activities. Tied to the same universe, all Axes Metaverse games will share a common economy. Player resources earned in one game can be used in another. Train a hero in one game, and then send them to another? Easy! This is one world.",
+      "Lifetise is the first fintech metaverse, a virtual world where people can plan their lives and visualise how to afford major goals (owning a home, starting a business, marriage, kids, retirement, etc). With Lifetise you create the life you want and we show you how to achieve it in real life. Your financial life is reimagined as a series of interconnected puzzles and visualisations, complex life decisions are broken down into step-by-step actions. As you progress towards your goals, you earn LIFE tokens that can be staked to earn higher APY as you progress further and ultimately earn more money to achieve your goals quicker. Play-to-earn becomes Earn-for-LIFE! Imagine feeling so confident about every decision you make in life. Knowing that you can play out different future outcomes before you commit. That's what Lifetise promises.",
+  },
+  {
+    id: 5,
+    name: "MetaClash",
+    image: metaclash,
+    status: "upcoming",
+    twitterLink: "https://x.com",
+    telegramLink: "https://t.me/",
+    hardCap: "$200 000",
+    tokenPrice: "0.00075 USDT",
+    startDate: "TBA",
+    width: "0%",
+    content:
+      "MetaClash is a blockchain game built on Unreal Engine to create a hyper-realistic science fantasy Metaverse. MetaClash has developed an innovative new approach to NFT based games. To create a secure ecosystem of DAOs and Tokens, MetaClash uses blockchain technology to provide a seamless play and earn gaming experience for players. MetaClash shall construct a digital world for the community, and by the community. It will be an entire ecosystem of play and earn games, realistic visual event grounds, and ever-evolving entertainment. Fully decentralized DAOs will govern the ecosystem, which rewards users based on their skills, effort, and contributions",
   },
   {
     id: 6,
-    name: "IVENDPAY",
-    image: ivendpay,
-    status: "ended",
+    name: "Script Network",
+    image: scriptnetwork,
+    status: "live",
     twitterLink: "https://x.com",
     telegramLink: "https://t.me/",
-    hardCap: "$142 501",
+    hardCap: "$250 000",
     tokenPrice: "0.9 USDT",
-    startDate: "2023-06-15",
-    width: "100%",
+    startDate: "2023-12-14",
+    width: "10%",
     content:
-      "ivendPay is an international payment service that allows businesses to accept cryptocurrency payments through point-of-sale (POS) terminals, mobile apps, e-commerce platforms, API, and vending machines. Currently, the service operates in seven countries with some 400 active merchants, and the number of new sales points continues to grow weekly. ivendPay is already one of the EU's largest cryptocurrency payment providers in vending and retail systems. IVPAY is a utility token of the ivendPay ecosystem. It was created to ensure a smooth transfer of value across the whole ecosystem. The token will be integrated into the services and products as payment, reward, and discount means.",
+      "Script TV is a decentralized video delivery network that furnishes an expansive range of blockchain-enabled solutions to the problems related to the traditional video-streaming sector. The platform offers high-quality video streaming as well as multiple incentive mechanisms for decentralized bandwidth and content-sharing at a reduced cost as compared to conventional service providers. Script Network allows users to simultaneously watch video content and earn token rewards for relaying video to other users who are also watching the same content.",
   },
 ];
 
 export default function Page() {
-  const [filteredProjects, setFilteredProjects] = useState(projectsData);
+  const [filteredProjects, setFilteredProjects] = useState(() => {
+    const sortedProjects = [...projectsData].sort((a, b) => {
+      const order = { live: 1, upcoming: 2, ended: 3 };
+      return order[a.status] - order[b.status];
+    });
+    return sortedProjects;
+  });
 
   const handleSearch = (filteredProjects) => {
     setFilteredProjects(filteredProjects);
