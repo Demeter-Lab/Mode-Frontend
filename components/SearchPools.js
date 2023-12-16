@@ -45,11 +45,11 @@ export function SearchPools({ projects, onSearch, onSort }) {
       </div>
 
       <div className="flex justify-center space-x-4">
-        {["upcoming", "ended", "live"].map((status) => (
+        {["live", "upcoming", "ended"].map((status) => (
           <button
             key={status}
             className={`border border-gray-600 text-gray-400 px-4 py-2 rounded-lg ${
-              selectedStatus === status ? "bg-[#0f0c29] border border-gray-800 text-white" : ""
+              selectedStatus === status ? "bg-[#0f0c29]  text-white" : ""
             }`}
             onClick={() => handleSort(status)}
           >

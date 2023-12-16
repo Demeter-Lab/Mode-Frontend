@@ -1,5 +1,7 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import { Navbar } from "@/components/Navbar";
 import animalialogo from "../assets/images/animalialogo.jpg";
@@ -12,6 +14,7 @@ import TgIcon from "../assets/icons/tg.svg";
 import Twitter_X from "../assets/icons/twitter_x.svg";
 import "../../styles/Launchpad.css";
 import { SearchPools } from "@/components/SearchPools";
+import { PoolDetailPage } from "@/components/PoolDetailPage";
 
 const projectsData = [
   {
@@ -21,8 +24,9 @@ const projectsData = [
     status: "live",
     twitterLink: "https://x.com",
     telegramLink: "https://t.me/",
-    hardCap: "$100 011",
+    hardCap: "100011",
     tokenPrice: "0.5 USDT",
+    totalInvested: "30003.3",
     startDate: "2023-12-01",
     width: "30%",
     content:
@@ -35,8 +39,9 @@ const projectsData = [
     status: "upcoming",
     twitterLink: "https://x.com",
     telegramLink: "https://t.me/",
-    hardCap: "$237 500",
+    hardCap: "237500",
     tokenPrice: "0.05 USDT",
+    totalInvested: "0",
     startDate: "TBA",
     width: "0%",
     content:
@@ -49,8 +54,9 @@ const projectsData = [
     status: "ended",
     twitterLink: "https://x.com",
     telegramLink: "https://t.me/",
-    hardCap: "$142 501",
+    hardCap: "142501",
     tokenPrice: "0.9 USDT",
+    totalInvested: "142501",
     startDate: "2023-06-15",
     width: "100%",
     content:
@@ -63,8 +69,9 @@ const projectsData = [
     status: "upcoming",
     twitterLink: "https://x.com",
     telegramLink: "https://t.me/",
-    hardCap: "$190 001",
+    hardCap: "190001",
     tokenPrice: "0.03 USDT",
+    totalInvested: "0",
     startDate: "TBA",
     width: "0%",
     content:
@@ -77,8 +84,9 @@ const projectsData = [
     status: "upcoming",
     twitterLink: "https://x.com",
     telegramLink: "https://t.me/",
-    hardCap: "$200 000",
+    hardCap: "200000",
     tokenPrice: "0.00075 USDT",
+    totalInvested: "0",
     startDate: "TBA",
     width: "0%",
     content:
@@ -91,8 +99,9 @@ const projectsData = [
     status: "live",
     twitterLink: "https://x.com",
     telegramLink: "https://t.me/",
-    hardCap: "$250 000",
+    hardCap: "250000",
     tokenPrice: "0.9 USDT",
+    totalInvested: "25000",
     startDate: "2023-12-14",
     width: "10%",
     content:
@@ -101,6 +110,11 @@ const projectsData = [
 ];
 
 export default function Page() {
+
+  const router = useRouter();
+
+  const [selectedProject, setSelectedProject] = useState(null);
+
   const [filteredProjects, setFilteredProjects] = useState(() => {
     const sortedProjects = [...projectsData].sort((a, b) => {
       const order = { live: 1, upcoming: 2, ended: 3 };
@@ -204,12 +218,12 @@ export default function Page() {
                 </div>
 
                 <div>
-                  <p className="text-[#6A0DAD] font-bold">{project.hardCap}</p>
+                  <p className="text-[#6A0DAD] font-bold">${project.hardCap}</p>
                   <p className="text-gray-400 font-bold mt-4">
                     {project.startDate}
                   </p>
                   <p className="text-gray-400 font-bold mt-4">
-                    1 meme ={" "}
+                    1 {project.name.slice(0, 3).toUpperCase()} ={" "}
                     <span className="text-green-500">{project.tokenPrice}</span>
                   </p>
                 </div>
@@ -217,19 +231,33 @@ export default function Page() {
               <div className="mt-6 bg-gray-300 h-8 w-full rounded-lg relative">
                 <div
                   className="bg-green-500 h-full rounded-lg"
-                  style={{ width: project.width }}
+                  style={{
+                    width: `${
+                      (project.totalInvested / project.hardCap) * 100
+                    }%`,
+                  }}
                 ></div>
+
                 <span className="absolute inset-0 flex items-center justify-center text-gray-800 font-bold">
-                  {project.width}
+                  {(project.totalInvested / project.hardCap) * 100}%
                 </span>
               </div>
-              <span className="block text-right text-gray-400 font-light text-sm">
-  {`${(parseFloat(project.hardCap.replace(/[^\d.]/g, "")) / parseFloat(project.tokenPrice.replace(/[^\d.]/g, ""))).toLocaleString()} ${project.name.slice(0, 3).toUpperCase()}`}
-</span>
+              <span className="block text-right text-gray-500 font-light text-sm">
+                {`${project.totalInvested + "/" + (
+                  parseFloat(project.hardCap.replace(/[^\d.]/g, "")) /
+                  parseFloat(project.tokenPrice.replace(/[^\d.]/g, ""))
+                ).toLocaleString()} ${project.name.slice(0, 3).toUpperCase()}`}
+              </span>
+              <button onClick={() => router.push(`/launchpad/${project.id}`)}>
+  View Details
+</button>
 
             </div>
           ))}
         </div>
+        {selectedProject && (
+        <PoolDetailPage project={selectedProject} />
+      )}
       </div>
     </>
   );
