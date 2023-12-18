@@ -5,7 +5,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "ModePad",
-  description: "We offer a streamlined launchpad and IDO platform, empowering token projects to reach their full potential.",
+  description:
+    "We offer a streamlined launchpad and IDO platform, empowering token projects to reach their full potential.",
 };
 
 export default function RootLayout({ children }) {
