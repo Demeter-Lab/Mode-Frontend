@@ -5,16 +5,22 @@ import SearchIcon from "../app/assets/icons/icons8-search.svg";
 export function SearchPools({ projects, onSearch, onSort }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState(null);
+  const [previousFilteredProjects, setPreviousFilteredProjects] = useState(null);
 
   useEffect(() => {
     const filteredProjects = projects.filter((project) =>
       project.name.toUpperCase().includes(searchQuery.toUpperCase())
     );
-
-    if (JSON.stringify(filteredProjects) !== JSON.stringify(filteredProjects)) {
+  
+    if (
+      JSON.stringify(filteredProjects) !==
+      JSON.stringify(previousFilteredProjects)
+    ) {
       onSearch(filteredProjects);
+      setPreviousFilteredProjects(filteredProjects);
     }
-  }, [searchQuery, projects, onSearch]);
+  }, [searchQuery, projects, onSearch, previousFilteredProjects]);
+  
 
   const handleSort = (status) => {
     const sortedProjects = projects.filter(
