@@ -1,11 +1,15 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import "../../../styles/ProjectStyle.css";
 import Image from "next/image";
 import ModeLogo from "../../assets/images/Mode.JPG";
 import Twitter_X from "../../assets/icons/twitter_x.svg";
 import TgIcon from "../../assets/icons/tg.svg";
+import JoinPool from "@/components/JoinPool";
+import { ethers, N } from "ethers";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 
 /* 
 
@@ -15,6 +19,11 @@ import TgIcon from "../../assets/icons/tg.svg";
 export default function Pools() {
   const router = useRouter();
   const { id } = router;
+
+  const [isConnected, setIsConnected] = useState(false);
+  const [connectedAddress, setConnectedAddress] = useState("");
+
+  const [signer, setSigner] = useState({});
 
   const searchParams = useSearchParams();
 
@@ -42,8 +51,21 @@ export default function Pools() {
   // const { name, status } = props.project;
   // console.log('Name & Status', project);
 
+  const connectWallet = async () => {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const address = await signer.getAddress();
+    const truncatedAddress = `${address.substring(0, 3)}...${address.slice(
+      -2
+    )}`;
+    setSigner(signer);
+    setIsConnected(true);
+    setConnectedAddress(truncatedAddress);
+  };
+
   return (
     <>
+      <Navbar />
       <div className="container mx-auto mt-8 p-8">
         <h1 className="text-2xl font-bold mb-4 text-gray-200">
           Launchpad Details Page
@@ -66,13 +88,17 @@ export default function Pools() {
               </div>
 
               <div className="block mt-8">
-                <button className="bg-[#0f0c29] border border-gray-600 text-sm text-white px-4 py-2 rounded">
-                  Connect Wallet
+                <button
+                  className="bg-[#0f0c29] border border-gray-600 text-sm text-white px-4 py-2 rounded"
+                  onClick={connectWallet}
+                >
+                  {isConnected ? connectedAddress : "Connect Wallet"}
                 </button>
               </div>
             </div>
+            {isConnected ? <JoinPool /> : ""}
 
-            <div className="mt-6 p-6 price-styling">
+            <div className="p-6 price-styling">
               <h2>
                 1 USDT = {(1 / parseFloat(tokenPrice)).toFixed(2)}{" "}
                 {name && name.slice(0, 3)}
@@ -188,34 +214,41 @@ export default function Pools() {
                 </div>
               </div>
               <div className="poolDetails">
-              <h2 className="poolDetails-header mt-8">Token Details</h2>
-              <div className="grid grid-cols-2 gap-8 pt-8">
+                <h2 className="poolDetails-header mt-8">Token Details</h2>
+                <div className="grid grid-cols-2 gap-8 pt-8">
                   <div>
                     <p className="text-gray-400 font-light">Token Name:</p>
-                    <p className="text-gray-400 font-light mt-4">Total Supply: </p>
-                    <p className="text-gray-400 font-light mt-4">Initial Supply</p>
+                    <p className="text-gray-400 font-light mt-4">
+                      Total Supply:{" "}
+                    </p>
+                    <p className="text-gray-400 font-light mt-4">
+                      Initial Supply
+                    </p>
                   </div>
 
                   <div>
                     <p className="text-gray-400 font-bold">{name}</p>
-                    <p className="text-gray-400 font-bold mt-4">1 000 000 000</p>
+                    <p className="text-gray-400 font-bold mt-4">
+                      1 000 000 000
+                    </p>
                     <p className="text-gray-400 font-bold mt-4">5 490 000 </p>
                   </div>
                 </div>
               </div>
               <div className="block p-6 text-center mt-4">
-              <span className="text-sm font-medium text-gray-400">
-                Tokens are sent instantly upon joining the pool.
-              </span>
-              <br />
-              <span className="text-sm font-medium text-gray-400">
-                Anticipate Token Lock Feature Alongside Dev Mainnet Launch
-              </span>
-            </div>
+                <span className="text-sm font-medium text-gray-400">
+                  Tokens are sent instantly upon joining the pool.
+                </span>
+                <br />
+                <span className="text-sm font-medium text-gray-400">
+                  Anticipate Token Lock Feature Alongside Dev Mainnet Launch
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
