@@ -1,0 +1,28 @@
+
+.price-styling {
+  font-size: 24px;
+  font-family: Arial,Helvetica, sans-serif;
+  color: #6A0DAD;
+}
+
+.projectName {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.projectName-second {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.contentStyle {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 18px;
+}
+
+.poolDetails-header {
+  font-size: 32px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  color: rgb(118, 59, 173);
+}
