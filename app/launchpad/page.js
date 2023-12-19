@@ -15,6 +15,7 @@ import {
   getFirestore,
 } from "firebase/firestore";
 import { app } from "@/firebase/firebase";
+import { Footer } from "@/components/Footer";
 
 export default function Page() {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -227,6 +228,7 @@ export default function Page() {
         </div> )}
         {selectedProject && <Pools project={selectedProject} />}
       </div> 
+      <Footer />
     </>
   );
 }
