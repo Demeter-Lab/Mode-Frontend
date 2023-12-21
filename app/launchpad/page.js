@@ -207,6 +207,7 @@ export default function Page() {
                       totalInvested: project.totalInvested,
                       startDate: project.startDate,
                       content: project.content,
+                      contractAddress: project.contractAddress,
                     },
                   }}
                   className="border border-gray-700 px-4 py-2 rounded text-gray-400 block mx-auto text-center"

@@ -36,6 +36,7 @@ export default function Pools() {
   const totalInvested = searchParams.get("totalInvested");
   const startDate = searchParams.get("startDate");
   const content = searchParams.get("content");
+  const contractAddress = searchParams.get("contractAddress");
 
   /* console.log({
     name,
@@ -52,8 +53,10 @@ export default function Pools() {
   // console.log('Name & Status', project);
 
   const connectWallet = async () => {
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
+    const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+    // Prompt user for account connections
+    await provider.send("eth_requestAccounts", []);
+    const signer = provider.getSigner();
     const address = await signer.getAddress();
     const truncatedAddress = `${address.substring(0, 3)}...${address.slice(
       -2
@@ -96,7 +99,14 @@ export default function Pools() {
                 </button>
               </div>
             </div>
-            {isConnected ? <JoinPool /> : ""}
+            {isConnected ? (
+              <JoinPool
+                LaunchpadContractAddress={contractAddress}
+                signer={signer}
+              />
+            ) : (
+              ""
+            )}
 
             <div className="p-6 price-styling">
               <h2>
@@ -197,6 +207,9 @@ export default function Pools() {
                 <div className="grid grid-cols-2 gap-8 pt-8">
                   <div>
                     <p className="text-gray-400 font-light">Hard Cap</p>
+                    <p className="text-gray-400 font-light mt-4">
+                      Pool Contract Adrress
+                    </p>
                     <p className="text-gray-400 font-light mt-4">Start Date</p>
                     <p className="text-gray-400 font-light mt-4">End Date</p>
                     <p className="text-gray-400 font-light mt-4">Swap Rate</p>
@@ -204,6 +217,9 @@ export default function Pools() {
 
                   <div>
                     <p className="text-[#6A0DAD] font-bold">${hardCap}</p>
+                    <p className="text-gray-400 font-bold mt-4">
+                      {contractAddress}
+                    </p>
                     <p className="text-gray-400 font-bold mt-4">{startDate}</p>
                     <p className="text-gray-400 font-bold mt-4">TBA</p>
                     <p className="text-gray-400 font-bold mt-4">

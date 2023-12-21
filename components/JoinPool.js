@@ -1,8 +1,41 @@
-export default function JoinPool() {
+import { LaunchpadABI } from "@/constants/constant";
+import { ethers, BigNumber } from "ethers";
+import { useEffect, useState } from "react";
+
+export default function JoinPool({ LaunchpadContractAddress, signer }) {
+  const contract = new ethers.Contract(
+    LaunchpadContractAddress,
+    LaunchpadABI,
+    signer
+  );
+
+  const [amount, setAmount] = useState("");
+
+  const handleAmountChange = (event) => {
+    setAmount(event.target.value);
+  };
+
+  const handleBuyTokens = async (event) => {
+    event.preventDefault();
+
+    try {
+      const amountAsNumber = parseFloat(amount);
+      const result = (amountAsNumber * 10 ** 18).toString();
+
+      const tx = await contract.buyTokens({ value: BigNumber.from(result) });
+      await tx.wait();
+      console.log("Transaction successful: ", tx);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="p-8">
-        <form className="border border-gray-600 p-6 md:p-12 lg:p-16 mx-auto rounded-lg">
+        <form
+          onSubmit={handleBuyTokens}
+          className="border border-gray-600 p-6 md:p-12 lg:p-16 mx-auto rounded-lg"
+        >
           <div className="mb-4">
             <label
               htmlFor="myInput"
@@ -14,6 +47,8 @@ export default function JoinPool() {
               type="text"
               id="myInput"
               name="myInput"
+              value={amount}
+              onChange={handleAmountChange}
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
               placeholder="0.0"
             />
