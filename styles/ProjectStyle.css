@@ -26,3 +26,22 @@
   font-weight: bold;
   color: rgb(118, 59, 173);
 }
+
+.address-paragraph {
+  width: 100%; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.address-link {
+  color: #6A0DAD; 
+  text-decoration: underline; /* Add underline to indicate it's a link */
+  cursor: pointer; /* Add pointer cursor for better user experience */
+  width: 100%; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+

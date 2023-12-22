@@ -7,7 +7,7 @@ import ModeLogo from "../../assets/images/Mode.JPG";
 import Twitter_X from "../../assets/icons/twitter_x.svg";
 import TgIcon from "../../assets/icons/tg.svg";
 import JoinPool from "@/components/JoinPool";
-import { ethers, N } from "ethers";
+import { ethers } from "ethers";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -18,16 +18,19 @@ import { Footer } from "@/components/Footer";
 
 export default function Pools() {
   const router = useRouter();
-  const { id } = router;
+  // const { id } = router;
 
   const [isConnected, setIsConnected] = useState(false);
   const [connectedAddress, setConnectedAddress] = useState("");
+
+  const [connectedUserAddress, setConnectedUserAddress] = useState("");
 
   const [signer, setSigner] = useState({});
 
   const searchParams = useSearchParams();
 
   const name = searchParams.get("name");
+  const id = searchParams.get("id");
   const status = searchParams.get("status");
   const twitterLink = searchParams.get("twitterLink");
   const telegramLink = searchParams.get("telegramLink");
@@ -63,6 +66,7 @@ export default function Pools() {
     )}`;
     setSigner(signer);
     setIsConnected(true);
+    setConnectedUserAddress(address);
     setConnectedAddress(truncatedAddress);
   };
 
@@ -71,7 +75,7 @@ export default function Pools() {
       <Navbar />
       <div className="container mx-auto mt-8 p-8">
         <h1 className="text-2xl font-bold mb-4 text-gray-200">
-          Launchpad Details Page
+          Launchpad Details Page {id}
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-[#0f0c29] shadow-md rounded-lg py-4">
@@ -103,6 +107,8 @@ export default function Pools() {
               <JoinPool
                 LaunchpadContractAddress={contractAddress}
                 signer={signer}
+                userAddress={connectedUserAddress}
+                poolID={id}
               />
             ) : (
               ""
@@ -128,21 +134,15 @@ export default function Pools() {
                 ></div>
 
                 <span className="absolute inset-0 flex items-center justify-center text-gray-800 font-bold">
-                  {(totalInvested / hardCap) * 100}%
+                  {((totalInvested / hardCap) * 100).toFixed(2)}%
                 </span>
               </div>
             )}
 
-            <span className="block text-right text-gray-500 font-light text-sm mx-5">
+            <span className="block text-right text-gray-500 font-light text-sm">
               {`${
-                totalInvested +
-                "/" +
-                (hardCap && tokenPrice
-                  ? parseFloat(hardCap.replace(/[^\d.]/g, "")) /
-                    parseFloat(tokenPrice.replace(/[^\d.]/g, ""))
-                  : "N/A"
-                ).toLocaleString()
-              } ${name && name.slice(0, 3).toUpperCase()}`}
+                totalInvested + "/" + parseFloat(hardCap).toLocaleString()
+              } ETH`}
             </span>
 
             <div className="block p-6 text-center mt-4">
@@ -216,9 +216,16 @@ export default function Pools() {
                   </div>
 
                   <div>
-                    <p className="text-[#6A0DAD] font-bold">${hardCap}</p>
-                    <p className="text-gray-400 font-bold mt-4">
-                      {contractAddress}
+                    <p className="text-[#6A0DAD] font-bold">{hardCap} ETH</p>
+                    <p className="text-gray-400 font-bold mt-4 address-paragraph ">
+                      <a
+                        href={`https://sepolia.explorer.mode.network/address/${contractAddress}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="address-link"
+                      >
+                        {contractAddress}
+                      </a>
                     </p>
                     <p className="text-gray-400 font-bold mt-4">{startDate}</p>
                     <p className="text-gray-400 font-bold mt-4">TBA</p>
