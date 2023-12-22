@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import AboutImage from "../app/assets/images/cxpad_multichain_img.svg";
+import AboutImage from "../app/assets/images/Mode-Launchpad.png";
 
 export function AboutUs() {
   return (
@@ -38,7 +38,7 @@ export function AboutUs() {
           src={AboutImage}
           alt="About Us"
           loading="lazy"
-          className="rounded-lg w-full lg:w-auto rotate-animation"
+          className="w-full p-2 lg:w-auto"
         />
       </div>
     </div>
