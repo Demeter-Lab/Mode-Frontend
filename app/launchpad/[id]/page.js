@@ -104,12 +104,22 @@ export default function Pools() {
               </div>
             </div>
             {isConnected ? (
-              <JoinPool
-                LaunchpadContractAddress={contractAddress}
-                signer={signer}
-                userAddress={connectedUserAddress}
-                poolID={id}
-              />
+              status === "ended" ? (
+                <p className="text-center text-red-500 text-lg mt-6">
+                  Pool has ended
+                </p>
+              ) : status === "upcoming" ? (
+                <p className="text-center text-yellow-500 text-lg mt-6">
+                  Pool Will Not Start Until {startDate}
+                </p>
+              ) : (
+                <JoinPool
+                  LaunchpadContractAddress={contractAddress}
+                  signer={signer}
+                  userAddress={connectedUserAddress}
+                  poolID={id}
+                />
+              )
             ) : (
               ""
             )}

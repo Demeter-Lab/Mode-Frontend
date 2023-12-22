@@ -21,9 +21,10 @@ export function AboutUs() {
             Bridge ETH(mode)
           </Link>
 
-          <button className="border border-gray-500 text-gray-300 px-4 py-2 rounded-lg relative overflow-hidden gradient-button">
-            Upcoming IDOs
-          </button>
+          <a href="/launchpad" className="border border-gray-500 text-gray-300 px-4 py-2 rounded-lg relative overflow-hidden gradient-button">
+  Upcoming IDOs
+</a>
+
         </div>
       </div>
 

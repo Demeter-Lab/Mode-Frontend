@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -111,6 +111,7 @@ export function Navbar() {
               <li>
                 <a
                   className={`text-gray-200 text-sm border border-gray-600 px-4 py-2 ml-4 mr-4 rounded-lg cursor-pointer`}
+                  href="https://mide-sofek.gitbook.io/modepad"
                 >
                   Documentation
                 </a>
