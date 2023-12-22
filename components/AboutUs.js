@@ -28,7 +28,7 @@ export function AboutUs() {
             href="/launchpad"
             className="border border-gray-500 text-gray-300 px-4 py-2 rounded-lg relative overflow-hidden gradient-button"
           >
-            Launchpad App
+            Launch App
           </a>
         </div>
       </div>
